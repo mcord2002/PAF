@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Smart Campus Operations Hub
 
 Production-style monorepo for **IT3030 (PAF)** covering facilities catalogue, booking workflow with conflict prevention, maintenance/incident ticketing (attachments + comments + technician updates), and in-app notifications. Backend is **Spring Boot 4** with **JWT + role-based access**; frontend is **React (CRA)**.
@@ -93,3 +94,6 @@ cd frontend && npm test -- --watchAll=false
 ## Assignment artefacts
 
 Use this repo for: architecture diagrams (match packages under `com.campus.hub`), Postman/Newman collections against the endpoints above, and GitHub Actions logs as CI evidence.
+=======
+# PAF
+>>>>>>> 4b19d7d94ac8feb58ac30542248fa977ae83c8a4
