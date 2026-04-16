@@ -9,7 +9,7 @@ const highlights = [
   { label: 'Role-based access', value: 'Admin / Technician / User' },
   { label: 'Workflows', value: 'Booking + Incident' },
 ];
-
+//image URLs
 const heroSlides = [
   {
     title: 'Plan and book campus facilities with confidence',
@@ -31,6 +31,7 @@ const heroSlides = [
   },
 ];
 
+// Additional gallery images (not in the main slider)
 const smallGallery = [
   'https://images.pexels.com/photos/301920/pexels-photo-301920.jpeg?auto=compress&cs=tinysrgb&w=1000',
   'https://images.pexels.com/photos/256417/pexels-photo-256417.jpeg?auto=compress&cs=tinysrgb&w=1000',
@@ -40,6 +41,7 @@ const smallGallery = [
   'https://images.pexels.com/photos/159775/library-la-trobe-study-students-159775.jpeg?auto=compress&cs=tinysrgb&w=1000',
 ];
 
+// Note: This is a static landing page.
 export default function HomePage() {
   const { isAuthenticated, user } = useAuth();
   const dashboardPath = defaultDashboardPath(user);
@@ -54,6 +56,7 @@ export default function HomePage() {
   }, []);
 
   return (
+    
     <div className="landing">
       <header className="landing-nav">
         <div className="nav-left">

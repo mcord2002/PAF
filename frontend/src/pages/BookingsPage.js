@@ -27,6 +27,8 @@ export default function BookingsPage() {
   const [error, setError] = useState('');
   const [rejectModal, setRejectModal] = useState(null); // { id, reason }
 
+
+  //useState
   const [form, setForm] = useState({
     resourceId: '',
     startLocal: '',
