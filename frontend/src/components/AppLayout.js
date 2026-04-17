@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { defaultDashboardPath, primaryDashboardRole } from '../utils/dashboardPath';
@@ -21,12 +21,30 @@ function roleDisplayName(role) {
 export default function AppLayout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [unread, setUnread] = useState(0);
   const primaryRole = primaryDashboardRole(user);
   const dashboardLabel =
     primaryRole === 'ADMIN' ? 'Admin dashboard' : primaryRole === 'TECHNICIAN' ? 'Technician dashboard' : 'User dashboard';
   const roleLabel = roleDisplayName(primaryRole);
   const isTechnicianPrimary = primaryRole === 'TECHNICIAN';
+  const notice = useMemo(() => {
+    const params = new URLSearchParams(location.search);
+    const raw = params.get('notice');
+    if (!raw) return '';
+    try {
+      return decodeURIComponent(raw);
+    } catch {
+      return raw;
+    }
+  }, [location.search]);
+
+  const dismissNotice = () => {
+    const params = new URLSearchParams(location.search);
+    params.delete('notice');
+    const qs = params.toString();
+    navigate(`${location.pathname}${qs ? `?${qs}` : ''}`, { replace: true });
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -110,6 +128,14 @@ export default function AppLayout() {
           </div>
         </header>
         <section className="content">
+          {notice ? (
+            <div className="notice-banner" role="status">
+              <div className="notice-text">{notice}</div>
+              <button type="button" className="notice-dismiss" onClick={dismissNotice} aria-label="Dismiss notice">
+                ×
+              </button>
+            </div>
+          ) : null}
           <Outlet />
         </section>
       </main>

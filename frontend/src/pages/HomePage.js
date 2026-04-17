@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { defaultDashboardPath } from '../utils/dashboardPath';
+import { hasRole } from '../utils/roles';
 import './HomePage.css';
+
+const GOOGLE_PORTAL_KEY = 'campus_hub_google_portal';
 
 const highlights = [
   { label: 'Live modules', value: '4 core' },
@@ -45,6 +48,28 @@ const smallGallery = [
 export default function HomePage() {
   const { isAuthenticated, user } = useAuth();
   const dashboardPath = defaultDashboardPath(user);
+  const portalLink = (role, path, label) => {
+    if (isAuthenticated) {
+      if (hasRole(user, role)) {
+        return { to: path, state: undefined, title: `${label} portal` };
+      }
+      return {
+        to: `${defaultDashboardPath(user)}?notice=${encodeURIComponent(
+          `මෙම portal එකට ${label} role එක අවශ්‍යයි.`
+        )}`,
+        state: undefined,
+        title: `Requires ${role} role`,
+      };
+    }
+    return {
+      to: '/login',
+      state: { afterAuth: path, requiredRole: role },
+      title: `${label} portal (Google sign-in)`,
+      portal: role,
+    };
+  };
+  const adminPortal = portalLink('ADMIN', '/dashboard/admin', 'Admin');
+  const techPortal = portalLink('TECHNICIAN', '/dashboard/technician', 'Technician');
   const [slideIndex, setSlideIndex] = useState(0);
   const currentSlide = heroSlides[slideIndex];
 
@@ -77,7 +102,17 @@ export default function HomePage() {
             </Link>
           ) : (
             <>
-              <Link className="btn ghost" to="/login">
+              <Link
+                className="btn ghost"
+                to="/login"
+                onClick={() => {
+                  try {
+                    sessionStorage.removeItem(GOOGLE_PORTAL_KEY);
+                  } catch {
+                    /* ignore */
+                  }
+                }}
+              >
                 Sign in
               </Link>
               <Link className="btn primary" to="/register/user">
@@ -106,7 +141,17 @@ export default function HomePage() {
                 <Link className="btn primary" to="/register/user">
                   Create account
                 </Link>
-                <Link className="btn ghost" to="/login">
+                <Link
+                  className="btn ghost"
+                  to="/login"
+                  onClick={() => {
+                    try {
+                      sessionStorage.removeItem(GOOGLE_PORTAL_KEY);
+                    } catch {
+                      /* ignore */
+                    }
+                  }}
+                >
                   Login
                 </Link>
               </>
@@ -192,6 +237,43 @@ export default function HomePage() {
           {smallGallery.map((img, i) => (
             <img key={img} src={img} alt={`Campus operations view ${i + 1}`} loading="lazy" />
           ))}
+        </div>
+      </section>
+
+      <section className="landing-section role-portals-bottom">
+        <h2>Role Portals</h2>
+        <p className="muted">Sign in directly to admin or technician workspace.</p>
+        <div className="role-portals-actions">
+          <Link
+            className="btn ghost sm"
+            to={adminPortal.to}
+            state={adminPortal.state}
+            title={adminPortal.title}
+            onClick={() => {
+              try {
+                sessionStorage.setItem(GOOGLE_PORTAL_KEY, adminPortal.portal);
+              } catch {
+                /* ignore */
+              }
+            }}
+          >
+            Admin portal
+          </Link>
+          <Link
+            className="btn ghost sm"
+            to={techPortal.to}
+            state={techPortal.state}
+            title={techPortal.title}
+            onClick={() => {
+              try {
+                sessionStorage.setItem(GOOGLE_PORTAL_KEY, techPortal.portal);
+              } catch {
+                /* ignore */
+              }
+            }}
+          >
+            Technician portal
+          </Link>
         </div>
       </section>
     </div>

@@ -57,12 +57,54 @@ function App() {
               </RoleRoute>
             }
           />
-          <Route path="/resources" element={<ResourcesPage />} />
-          <Route path="/bookings" element={<BookingsPage />} />
-          <Route path="/tickets" element={<TicketsPage />} />
-          <Route path="/tickets/new" element={<TicketEditorPage />} />
-          <Route path="/tickets/:id" element={<TicketDetailPage />} />
-          <Route path="/notifications" element={<NotificationsPage />} />
+          <Route
+            path="/resources"
+            element={
+              <RoleRoute roles={['USER', 'ADMIN', 'TECHNICIAN']}>
+                <ResourcesPage />
+              </RoleRoute>
+            }
+          />
+          <Route
+            path="/bookings"
+            element={
+              <RoleRoute roles={['USER', 'ADMIN']}>
+                <BookingsPage />
+              </RoleRoute>
+            }
+          />
+          <Route
+            path="/tickets"
+            element={
+              <RoleRoute roles={['USER', 'ADMIN', 'TECHNICIAN']}>
+                <TicketsPage />
+              </RoleRoute>
+            }
+          />
+          <Route
+            path="/tickets/new"
+            element={
+              <RoleRoute roles={['USER', 'ADMIN']}>
+                <TicketEditorPage />
+              </RoleRoute>
+            }
+          />
+          <Route
+            path="/tickets/:id"
+            element={
+              <RoleRoute roles={['USER', 'ADMIN', 'TECHNICIAN']}>
+                <TicketDetailPage />
+              </RoleRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <RoleRoute roles={['USER', 'ADMIN', 'TECHNICIAN']}>
+                <NotificationsPage />
+              </RoleRoute>
+            }
+          />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

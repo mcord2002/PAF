@@ -53,11 +53,13 @@ public class TicketController {
 	}
 
 	@GetMapping
+	@PreAuthorize("hasAnyRole('USER','ADMIN','TECHNICIAN')")
 	public List<TicketResponse> list(@RequestParam(required = false, defaultValue = "mine") String scope) {
 		return ticketService.listFor(securityUtils.currentUser(), scope);
 	}
 
 	@GetMapping("/{id}")
+	@PreAuthorize("hasAnyRole('USER','ADMIN','TECHNICIAN')")
 	public TicketResponse get(@PathVariable Long id) {
 		return ticketService.get(securityUtils.currentUser(), id);
 	}
@@ -69,6 +71,7 @@ public class TicketController {
 	}
 
 	@PatchMapping("/{id}/status")
+	@PreAuthorize("hasAnyRole('ADMIN','TECHNICIAN')")
 	public TicketResponse updateStatus(@PathVariable Long id, @Valid @RequestBody TicketStatusUpdateRequest request) {
 		return ticketService.updateStatus(securityUtils.currentUser(), id, request);
 	}
@@ -80,11 +83,13 @@ public class TicketController {
 	}
 
 	@GetMapping("/{id}/attachments")
+	@PreAuthorize("hasAnyRole('USER','ADMIN','TECHNICIAN')")
 	public List<TicketAttachmentResponse> listAttachments(@PathVariable Long id) {
 		return ticketService.listAttachments(securityUtils.currentUser(), id);
 	}
 
 	@PostMapping(path = "/{id}/attachments", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PreAuthorize("hasAnyRole('USER','ADMIN','TECHNICIAN')")
 	public TicketAttachmentResponse uploadAttachment(
 			@PathVariable Long id,
 			@RequestPart("file") MultipartFile file) throws IOException {
@@ -92,6 +97,7 @@ public class TicketController {
 	}
 
 	@GetMapping("/{id}/attachments/{attachmentId}/file")
+	@PreAuthorize("hasAnyRole('USER','ADMIN','TECHNICIAN')")
 	public ResponseEntity<Resource> downloadAttachment(@PathVariable Long id, @PathVariable Long attachmentId) throws IOException {
 		TicketService.ResourceWithStream payload = ticketService.downloadAttachment(securityUtils.currentUser(), id, attachmentId);
 		String encoded = URLEncoder.encode(payload.filename(), StandardCharsets.UTF_8).replace("+", "%20");
@@ -102,21 +108,25 @@ public class TicketController {
 	}
 
 	@GetMapping("/{id}/comments")
+	@PreAuthorize("hasAnyRole('USER','ADMIN','TECHNICIAN')")
 	public List<CommentResponse> listComments(@PathVariable Long id) {
 		return ticketService.listComments(securityUtils.currentUser(), id);
 	}
 
 	@PostMapping("/{id}/comments")
+	@PreAuthorize("hasAnyRole('USER','ADMIN','TECHNICIAN')")
 	public CommentResponse addComment(@PathVariable Long id, @Valid @RequestBody CommentRequest request) {
 		return ticketService.addComment(securityUtils.currentUser(), id, request);
 	}
 
 	@PutMapping("/comments/{commentId}")
+	@PreAuthorize("hasAnyRole('USER','ADMIN','TECHNICIAN')")
 	public CommentResponse updateComment(@PathVariable Long commentId, @Valid @RequestBody CommentRequest request) {
 		return ticketService.updateComment(securityUtils.currentUser(), commentId, request);
 	}
 
 	@DeleteMapping("/comments/{commentId}")
+	@PreAuthorize("hasAnyRole('USER','ADMIN','TECHNICIAN')")
 	public void deleteComment(@PathVariable Long commentId) {
 		ticketService.deleteComment(securityUtils.currentUser(), commentId);
 	}

@@ -44,6 +44,7 @@ public class BookingController {
 	}
 
 	@GetMapping
+	@PreAuthorize("hasRole('ADMIN')")
 	public List<BookingResponse> listAll(
 			@RequestParam(required = false) BookingStatus status,
 			@RequestParam(required = false) Long resourceId) {
@@ -51,11 +52,13 @@ public class BookingController {
 	}
 
 	@PatchMapping("/{id}/approve")
+	@PreAuthorize("hasRole('ADMIN')")
 	public BookingResponse approve(@PathVariable Long id) {
 		return bookingService.approve(securityUtils.currentUser(), id);
 	}
 
 	@PatchMapping("/{id}/reject")
+	@PreAuthorize("hasRole('ADMIN')")
 	public BookingResponse reject(@PathVariable Long id, @Valid @RequestBody RejectBookingRequest request) {
 		return bookingService.reject(securityUtils.currentUser(), id, request);
 	}
