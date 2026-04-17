@@ -130,7 +130,7 @@ export default function LoginPage() {
         : defaultDashboardPath(user);
     return <Navigate to={to} replace />;
   }
-
+//validation
   const onSubmit = async (e) => {
     e.preventDefault();
     setError('');
