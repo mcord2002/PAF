@@ -1,6 +1,7 @@
 package com.campus.hub.controller;
 
 import com.campus.hub.dto.auth.AuthResponse;
+import com.campus.hub.dto.auth.GoogleLoginRequest;
 import com.campus.hub.dto.auth.LoginRequest;
 import com.campus.hub.dto.auth.RegisterRequest;
 import com.campus.hub.service.AuthService;
@@ -31,5 +32,10 @@ public class AuthController {
 	@PostMapping("/login")
 	public AuthResponse login(@Valid @RequestBody LoginRequest request) {
 		return authService.login(request);
+	}
+
+	@PostMapping("/google")
+	public AuthResponse loginWithGoogle(@Valid @RequestBody GoogleLoginRequest request) {
+		return authService.loginWithGoogle(request);
 	}
 }
