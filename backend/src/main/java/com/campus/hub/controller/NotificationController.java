@@ -38,7 +38,10 @@ public class NotificationController {
 	public Map<String, Long> unreadCount() {
 		return Map.of("count", notificationService.unreadCount(securityUtils.currentUser()));
 	}
-
+//Add Notification entity/model and repository
+//Initial backend structure for notifications.
+//Implement Notification service logic
+//Business logic for creating, fetching, and marking notifications.
 	@PatchMapping("/{id}/read")
 	@PreAuthorize("hasAnyRole('USER','ADMIN','TECHNICIAN')")
 	public void markRead(@PathVariable Long id) {
@@ -57,3 +60,7 @@ public class NotificationController {
 		notificationService.clearOne(securityUtils.currentUser(), id);
 	}
 }
+//Add Notification entity/model and repository
+//Initial backend structure for notifications.
+//Implement Notification service logic
+//Business logic for creating, fetching, and marking notifications.
