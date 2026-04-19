@@ -170,7 +170,9 @@ export default function ResourcesPage() {
                             <th>Name</th>
                             <th>Type</th>
                             <th>Capacity</th>
+                           
                             <th>Location</th>
+                             <th>Availability</th>
                             <th>Status</th>
                             {admin ? <th /> : null}
                         </tr>
@@ -184,6 +186,7 @@ export default function ResourcesPage() {
                                 </td>
                                 <td>{r.capacity}</td>
                                 <td>{r.location}</td>
+                                <td>{r.availabilityWindows}</td>
                                 <td>
                                     <span className={`status ${r.status === 'ACTIVE' ? 'ok' : 'bad'}`}>{r.status === 'ACTIVE' ? '✅' : '⛔'} {r.status}</span>
                                 </td>
