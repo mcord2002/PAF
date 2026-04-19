@@ -57,3 +57,7 @@ public class NotificationController {
 		notificationService.clearOne(securityUtils.currentUser(), id);
 	}
 }
+//Add Notification entity/model and repository
+//Initial backend structure for notifications.
+//Implement Notification service logic
+//Business logic for creating, fetching, and marking notifications.
