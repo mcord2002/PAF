@@ -35,7 +35,10 @@ export default function NotificationsPage() {
     await api.delete(`/notifications/${id}`);
     await load();
   };
-
+//Add Notification entity/model and repository
+//Initial backend structure for notifications.
+//Implement Notification service logic
+//Business logic for creating, fetching, and marking notifications.
   return (
     <div className="ops-page notifications-page">
       <div className="ops-hero row space-between wrap gap">
