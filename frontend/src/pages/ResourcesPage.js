@@ -1,9 +1,21 @@
-
 import React, { useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { hasRole } from '../utils/roles';
 import './OperationsPages.css';
+
+// Icon components
+const IconPackage = () => <svg className="dashboard-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" /></svg>;
+
+const getTypeIcon = (type) => {
+    const icons = {
+        LECTURE_HALL: '🎓',
+        LAB: '🔬',
+        MEETING_ROOM: '👥',
+        EQUIPMENT: '🖥️',
+    };
+    return icons[type] || '📦';
+};
 
 const emptyResource = {
     name: '',
@@ -22,6 +34,9 @@ export default function ResourcesPage() {
     const [error, setError] = useState('');
     const [filters, setFilters] = useState({ q: '', type: '', minCapacity: '', location: '', status: '' });
     const [editor, setEditor] = useState(null); // null | { mode:'create'|'edit', payload }
+
+    const activeCount = useMemo(() => items.filter(r => r.status === 'ACTIVE').length, [items]);
+    const outOfServiceCount = useMemo(() => items.filter(r => r.status === 'OUT_OF_SERVICE').length, [items]);
 
     const query = useMemo(() => {
         const p = new URLSearchParams();
@@ -92,16 +107,22 @@ export default function ResourcesPage() {
 
     return (
         <div className="ops-page resources-page">
-            <div className="ops-hero row space-between align-start wrap gap">
+            <div className="ops-hero">
                 <div>
                     <h1 className="h1">Facilities and assets</h1>
-                    <p className="muted">Search and filter the bookable catalogue.</p>
+                    <p className="muted">Search and filter the bookable catalogue. Manage resource availability and capacity.</p>
                 </div>
                 {admin ? (
                     <button type="button" className="btn primary" onClick={openCreate}>
-                        New resource
+                        ➕ New resource
                     </button>
                 ) : null}
+            </div>
+
+            <div className="ops-chip-row">
+                <span className="ops-chip">📊 Total: {items.length}</span>
+                <span className="ops-chip">✅ Active: {activeCount}</span>
+                <span className="ops-chip">⛔ Out of service: {outOfServiceCount}</span>
             </div>
 
             <div className="panel ops-panel">
@@ -150,7 +171,6 @@ export default function ResourcesPage() {
                             <th>Type</th>
                             <th>Capacity</th>
                             <th>Location</th>
-                            <th>Availability</th>
                             <th>Status</th>
                             {admin ? <th /> : null}
                         </tr>
@@ -160,15 +180,12 @@ export default function ResourcesPage() {
                             <tr key={r.id}>
                                 <td>{r.name}</td>
                                 <td>
-                                    <span className="tag">{r.type}</span>
+                                    <span className="tag" style={{ fontSize: '16px' }}>{getTypeIcon(r.type)} {r.type}</span>
                                 </td>
                                 <td>{r.capacity}</td>
                                 <td>{r.location}</td>
                                 <td>
-                                    {r.availabilityWindows ? r.availabilityWindows : '-'}
-                                </td>
-                                <td>
-                                    <span className={`status ${r.status === 'ACTIVE' ? 'ok' : 'bad'}`}>{r.status}</span>
+                                    <span className={`status ${r.status === 'ACTIVE' ? 'ok' : 'bad'}`}>{r.status === 'ACTIVE' ? '✅' : '⛔'} {r.status}</span>
                                 </td>
                                 {admin ? (
                                     <td className="right">

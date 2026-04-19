@@ -4,6 +4,19 @@ import { useAuth } from '../context/AuthContext';
 import { hasRole } from '../utils/roles';
 import './OperationsPages.css';
 
+// Icon component
+const IconCalendar = () => <svg className="dashboard-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z" /></svg>;
+
+const getBookingStatusIcon = (status) => {
+    const icons = {
+        PENDING: '⏳',
+        APPROVED: '✅',
+        REJECTED: '❌',
+        CANCELLED: '🚫',
+    };
+    return icons[status] || '📋';
+};
+
 function toInstant(value) {
     if (!value) return null;
     const d = new Date(value);
@@ -27,8 +40,8 @@ export default function BookingsPage() {
     const [error, setError] = useState('');
     const [rejectModal, setRejectModal] = useState(null); // { id, reason }
 
-
-    //useState
+    const pendingCount = useMemo(() => adminRows.filter(b => b.status === 'PENDING').length, [adminRows]);
+    const approvedCount = useMemo(() => adminRows.filter(b => b.status === 'APPROVED').length, [adminRows]);
     const [form, setForm] = useState({
         resourceId: '',
         startLocal: '',
@@ -156,9 +169,23 @@ export default function BookingsPage() {
     return (
         <div className="ops-page bookings-page">
             <div className="ops-hero">
-                <h1 className="h1">Bookings</h1>
-                <p className="muted">Request a booking, track approvals, and avoid conflicts for the same resource.</p>
+                <div>
+                    <h1 className="h1">Bookings</h1>
+                    <p className="muted">Request a booking, track approvals, and avoid conflicts for the same resource.</p>
+                </div>
             </div>
+
+            {admin ? (
+                <div className="ops-chip-row">
+                    <span className="ops-chip">📋 Total: {adminRows.length}</span>
+                    <span className="ops-chip">⏳ Pending: {pendingCount}</span>
+                    <span className="ops-chip">✅ Approved: {approvedCount}</span>
+                </div>
+            ) : (
+                <div className="ops-chip-row">
+                    <span className="ops-chip">📖 My bookings: {mine.length}</span>
+                </div>
+            )}
 
             {!admin ? (
                 <div className="panel ops-panel" style={{ marginTop: 14 }}>
@@ -182,7 +209,7 @@ export default function BookingsPage() {
                             End (local)
                             <input className="input" type="datetime-local" value={form.endLocal} onChange={(e) => setForm((f) => ({ ...f, endLocal: e.target.value }))} required />
                         </label>
-                        <label className="label span-3">
+                        <label className="label span-2">
                             Purpose
                             <input className="input" value={form.purpose} onChange={(e) => setForm((f) => ({ ...f, purpose: e.target.value }))} minLength={5} maxLength={300} required />
                         </label>
@@ -190,7 +217,7 @@ export default function BookingsPage() {
                             Expected attendees
                             <input className="input" type="number" min="1" step="1" value={form.expectedAttendees} onChange={(e) => setForm((f) => ({ ...f, expectedAttendees: e.target.value }))} />
                         </label>
-                        <div className="span-3" style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                        <div className="span-2" style={{ display: 'flex', alignItems: 'end' }}>
                             <button className="btn primary" type="submit">
                                 Submit request
                             </button>
@@ -209,10 +236,10 @@ export default function BookingsPage() {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th>When</th>
-                            <th>Resource</th>
-                            <th>Purpose</th>
-                            <th>Status</th>
+                            <th>📅 When</th>
+                            <th>📦 Resource</th>
+                            <th>📝 Purpose</th>
+                            <th>📊 Status</th>
                             <th />
                         </tr>
                     </thead>
@@ -226,7 +253,7 @@ export default function BookingsPage() {
                                 <td>{b.resource?.name}</td>
                                 <td>{b.purpose}</td>
                                 <td>
-                                    <span className={`status ${statusClass(b.status)}`}>{b.status}</span>
+                                    <span className={`status ${statusClass(b.status)}`}>{getBookingStatusIcon(b.status)} {b.status}</span>
                                     {b.adminReason ? <div className="muted" style={{ marginTop: 6 }}>{b.adminReason}</div> : null}
                                 </td>
                                 <td className="right">
