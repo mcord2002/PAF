@@ -5,7 +5,7 @@ import com.campus.hub.dto.booking.BookingCreateRequest;
 import com.campus.hub.dto.booking.BookingResponse;
 import com.campus.hub.dto.booking.RejectBookingRequest;
 import com.campus.hub.security.SecurityUtils;
-import com.campus.hub.service.BookingService;
+import com.campus.hub.service.BookingService; 
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
