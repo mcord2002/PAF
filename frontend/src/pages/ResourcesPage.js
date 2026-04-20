@@ -170,9 +170,9 @@ export default function ResourcesPage() {
                             <th>Name</th>
                             <th>Type</th>
                             <th>Capacity</th>
-                           
+
                             <th>Location</th>
-                             <th>Availability</th>
+                            <th>Availability</th>
                             <th>Status</th>
                             {admin ? <th /> : null}
                         </tr>
