@@ -15,3 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	List<User> findByRolesContains(AppRole role);
 }
+
+
+//Add Backend Endpoints for Role Management
+//Create the backend API endpoints for updating and fetching user roles.

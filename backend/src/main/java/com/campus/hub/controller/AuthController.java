@@ -39,3 +39,7 @@ public class AuthController {
 		return authService.loginWithGoogle(request);
 	}
 }
+
+
+//Add Backend Endpoints for Role Management
+//Create the backend API endpoints for updating and fetching user roles.

@@ -91,3 +91,7 @@ public class User {
 		this.roles = roles;
 	}
 }
+
+
+//Add Backend Endpoints for Role Management
+//Create the backend API endpoints for updating and fetching user roles.
