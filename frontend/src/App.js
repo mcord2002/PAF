@@ -114,3 +114,7 @@ function App() {
 }
 
 export default App;
+
+
+ //Add Role-Based Route Protection (Frontend) 
+ //  Implement role-based route guards for frontend access control (different roles for different pages).

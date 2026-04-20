@@ -26,3 +26,7 @@ export default function RoleRoute({ roles, exactPrimaryRole, children }) {
   }
   return children;
 }
+
+
+ //Add Role-Based Route Protection (Frontend) 
+ //  Implement role-based route guards for frontend access control (different roles for different pages).
