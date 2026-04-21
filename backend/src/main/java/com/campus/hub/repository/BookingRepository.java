@@ -1,3 +1,4 @@
+
 package com.campus.hub.repository;
 
 import com.campus.hub.domain.BookingStatus;
