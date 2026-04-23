@@ -49,4 +49,8 @@ public class AuthController {
 //  Set up the GoogleTokenService and initial OAuth configuration files for Google OAuth integration.
 
 //Implement OAuth Login Endpoint and Callback 
-//  Set up the OAuth login and callback endpoints to handle user login via Google. 
+//  Set up the OAuth login and callback endpoints to handle user login via Google.
+
+
+//Integrate JWT Token Generation for OAuth Users 
+// After successful OAuth login, generate a JWT token for the user.

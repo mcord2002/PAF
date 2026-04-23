@@ -37,3 +37,7 @@ api.interceptors.response.use(
     return Promise.reject(enriched);
   }
 );
+
+
+//Integrate JWT Token Generation for OAuth Users 
+// After successful OAuth login, generate a JWT token for the user.
