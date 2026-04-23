@@ -14,3 +14,5 @@ public record RegisterRequest(
 		AppRole accountType
 ) {
 }
+
+//ppRole Enum and Role Entity/Model

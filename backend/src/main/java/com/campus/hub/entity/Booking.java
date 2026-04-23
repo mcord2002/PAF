@@ -1,6 +1,9 @@
 package com.campus.hub.entity;
 
+// Import enum for booking status (e.g., PENDING, APPROVED, REJECTED)
 import com.campus.hub.domain.BookingStatus;
+
+// JPA annotations for ORM mapping
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,146 +16,194 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+// Java time API for timestamps
 import java.time.Instant;
+
 //Entity
+
+// Marks this class as a database entity
 @Entity
+
+// Maps this entity to the "bookings" table
 @Table(name = "bookings")
 public class Booking {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    // Primary key of the booking table
+    @Id
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "requester_id")
-	private User requester;
+    // Auto-generated ID (auto-increment in DB)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "resource_id")
-	private BookableResource resource;
+    // Many bookings can be made by one user (requester)
+    // LAZY = data will be fetched only when needed
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
 
-	@Column(nullable = false, name = "start_at")
-	private Instant startAt;
+    // Foreign key column in DB
+    @JoinColumn(name = "requester_id")
+    private User requester;
 
-	@Column(nullable = false, name = "end_at")
-	private Instant endAt;
+    // Many bookings can belong to one resource
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "resource_id")
+    private BookableResource resource;
 
-	@Column(nullable = false, length = 500)
-	private String purpose;
+    // Booking start time (cannot be null)
+    @Column(nullable = false, name = "start_at")
+    private Instant startAt;
 
-	@Column(name = "expected_attendees")
-	private Integer expectedAttendees;
+    // Booking end time (cannot be null)
+    @Column(nullable = false, name = "end_at")
+    private Instant endAt;
 
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false, length = 24)
-	private BookingStatus status = BookingStatus.PENDING;
+    // Purpose of the booking (e.g., meeting, lecture)
+    @Column(nullable = false, length = 500)
+    private String purpose;
 
-	@Column(name = "admin_reason", length = 1000)
-	private String adminReason;
+    // Optional field: expected number of attendees
+    @Column(name = "expected_attendees")
+    private Integer expectedAttendees;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "reviewed_by_id")
-	private User reviewedBy;
+    // Booking status stored as STRING in DB
+    // Default value is PENDING
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 24)
+    private BookingStatus status = BookingStatus.PENDING;
 
-	@Column(name = "reviewed_at")
-	private Instant reviewedAt;
+    // Optional reason given by admin (e.g., rejection reason)
+    @Column(name = "admin_reason", length = 1000)
+    private String adminReason;
 
-	@Column(name = "created_at", nullable = false)
-	private Instant createdAt = Instant.now();
+    // Admin (User) who reviewed the booking
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reviewed_by_id")
+    private User reviewedBy;
 
-	public Long getId() {
-		return id;
-	}
+    // Timestamp when booking was reviewed
+    @Column(name = "reviewed_at")
+    private Instant reviewedAt;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    // Timestamp when booking was created (default = current time)
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt = Instant.now();
 
-	public User getRequester() {
-		return requester;
-	}
+    // Getter for ID
+    public Long getId() {
+        return id;
+    }
 
-	public void setRequester(User requester) {
-		this.requester = requester;
-	}
+    // Setter for ID
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public BookableResource getResource() {
-		return resource;
-	}
+    // Getter for requester
+    public User getRequester() {
+        return requester;
+    }
 
-	public void setResource(BookableResource resource) {
-		this.resource = resource;
-	}
+    // Setter for requester
+    public void setRequester(User requester) {
+        this.requester = requester;
+    }
 
-	public Instant getStartAt() {
-		return startAt;
-	}
+    // Getter for resource
+    public BookableResource getResource() {
+        return resource;
+    }
 
-	public void setStartAt(Instant startAt) {
-		this.startAt = startAt;
-	}
+    // Setter for resource
+    public void setResource(BookableResource resource) {
+        this.resource = resource;
+    }
 
-	public Instant getEndAt() {
-		return endAt;
-	}
+    // Getter for start time
+    public Instant getStartAt() {
+        return startAt;
+    }
 
-	public void setEndAt(Instant endAt) {
-		this.endAt = endAt;
-	}
+    // Setter for start time
+    public void setStartAt(Instant startAt) {
+        this.startAt = startAt;
+    }
 
-	public String getPurpose() {
-		return purpose;
-	}
+    // Getter for end time
+    public Instant getEndAt() {
+        return endAt;
+    }
 
-	public void setPurpose(String purpose) {
-		this.purpose = purpose;
-	}
+    // Setter for end time
+    public void setEndAt(Instant endAt) {
+        this.endAt = endAt;
+    }
 
-	public Integer getExpectedAttendees() {
-		return expectedAttendees;
-	}
+    // Getter for purpose
+    public String getPurpose() {
+        return purpose;
+    }
 
-	public void setExpectedAttendees(Integer expectedAttendees) {
-		this.expectedAttendees = expectedAttendees;
-	}
+    // Setter for purpose
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
 
-	public BookingStatus getStatus() {
-		return status;
-	}
+    // Getter for expected attendees
+    public Integer getExpectedAttendees() {
+        return expectedAttendees;
+    }
 
-	public void setStatus(BookingStatus status) {
-		this.status = status;
-	}
+    // Setter for expected attendees
+    public void setExpectedAttendees(Integer expectedAttendees) {
+        this.expectedAttendees = expectedAttendees;
+    }
 
-	public String getAdminReason() {
-		return adminReason;
-	}
+    // Getter for booking status
+    public BookingStatus getStatus() {
+        return status;
+    }
 
-	public void setAdminReason(String adminReason) {
-		this.adminReason = adminReason;
-	}
+    // Setter for booking status
+    public void setStatus(BookingStatus status) {
+        this.status = status;
+    }
 
-	public User getReviewedBy() {
-		return reviewedBy;
-	}
+    // Getter for admin reason
+    public String getAdminReason() {
+        return adminReason;
+    }
 
-	public void setReviewedBy(User reviewedBy) {
-		this.reviewedBy = reviewedBy;
-	}
+    // Setter for admin reason
+    public void setAdminReason(String adminReason) {
+        this.adminReason = adminReason;
+    }
 
-	public Instant getReviewedAt() {
-		return reviewedAt;
-	}
+    // Getter for reviewedBy (admin)
+    public User getReviewedBy() {
+        return reviewedBy;
+    }
 
-	public void setReviewedAt(Instant reviewedAt) {
-		this.reviewedAt = reviewedAt;
-	}
+    // Setter for reviewedBy
+    public void setReviewedBy(User reviewedBy) {
+        this.reviewedBy = reviewedBy;
+    }
 
-	public Instant getCreatedAt() {
-		return createdAt;
-	}
+    // Getter for reviewedAt timestamp
+    public Instant getReviewedAt() {
+        return reviewedAt;
+    }
 
-	public void setCreatedAt(Instant createdAt) {
-		this.createdAt = createdAt;
-	}
+    // Setter for reviewedAt
+    public void setReviewedAt(Instant reviewedAt) {
+        this.reviewedAt = reviewedAt;
+    }
+
+    // Getter for createdAt timestamp
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    // Setter for createdAt
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
 }

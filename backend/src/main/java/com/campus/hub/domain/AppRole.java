@@ -5,3 +5,6 @@ public enum AppRole {
 	ADMIN,
 	TECHNICIAN
 }
+
+
+//ppRole Enum and Role Entity/Model

@@ -182,3 +182,10 @@ export default function AdminDashboard() {
     </div>
   );
 }
+
+//Create Role Management UI (Frontend) 
+// // Set up a frontend page/component for managing user roles (e.g., admin panel). 
+
+
+//Implement OAuth Login Endpoint and Callback 
+//  Set up the OAuth login and callback endpoints to handle user login via Google. 

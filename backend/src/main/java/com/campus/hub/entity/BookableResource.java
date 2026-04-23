@@ -1,7 +1,10 @@
 package com.campus.hub.entity;
 
+// Importing enum types for resource status and type
 import com.campus.hub.domain.ResourceStatus;
 import com.campus.hub.domain.ResourceType;
+
+// JPA annotations for mapping class to database
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,88 +14,117 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+// Marks this class as a JPA entity (table in database)
 @Entity
+
+// Specifies the table name in the database
 @Table(name = "bookable_resources")
 public class BookableResource {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    // Primary key of the table
+    @Id
 
-	@Column(nullable = false, length = 200)
-	private String name;
+    // Auto-increment ID generation strategy
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false, length = 32)
-	private ResourceType type;
+    // Resource name (cannot be null, max length 200)
+    @Column(nullable = false, length = 200)
+    private String name;
 
-	@Column(nullable = false)
-	private Integer capacity;
+    // Enum stored as STRING in database (e.g., ROOM, LAB, etc.)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 32)
+    private ResourceType type;
 
-	@Column(nullable = false, length = 300)
-	private String location;
+    // Maximum number of people/resource capacity
+    @Column(nullable = false)
+    private Integer capacity;
 
-	/** Optional JSON or human text describing availability windows */
-	@Column(name = "availability_windows", length = 2000)
-	private String availabilityWindows;
+    // Location of the resource (cannot be null, max length 300)
+    @Column(nullable = false, length = 300)
+    private String location;
 
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false, length = 32)
-	private ResourceStatus status = ResourceStatus.ACTIVE;
+    /**
+     * Optional field:
+     * Can store JSON or plain text describing
+     * available time windows (e.g., "9AM-5PM")
+     */
+    @Column(name = "availability_windows", length = 2000)
+    private String availabilityWindows;
 
-	public Long getId() {
-		return id;
-	}
+    // Status of the resource (default = ACTIVE)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 32)
+    private ResourceStatus status = ResourceStatus.ACTIVE;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    // Getter for ID
+    public Long getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    // Setter for ID
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    // Getter for name
+    public String getName() {
+        return name;
+    }
 
-	public ResourceType getType() {
-		return type;
-	}
+    // Setter for name
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setType(ResourceType type) {
-		this.type = type;
-	}
+    // Getter for resource type
+    public ResourceType getType() {
+        return type;
+    }
 
-	public Integer getCapacity() {
-		return capacity;
-	}
+    // Setter for resource type
+    public void setType(ResourceType type) {
+        this.type = type;
+    }
 
-	public void setCapacity(Integer capacity) {
-		this.capacity = capacity;
-	}
+    // Getter for capacity
+    public Integer getCapacity() {
+        return capacity;
+    }
 
-	public String getLocation() {
-		return location;
-	}
+    // Setter for capacity
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
+    // Getter for location
+    public String getLocation() {
+        return location;
+    }
 
-	public String getAvailabilityWindows() {
-		return availabilityWindows;
-	}
+    // Setter for location
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-	public void setAvailabilityWindows(String availabilityWindows) {
-		this.availabilityWindows = availabilityWindows;
-	}
+    // Getter for availability windows
+    public String getAvailabilityWindows() {
+        return availabilityWindows;
+    }
 
-	public ResourceStatus getStatus() {
-		return status;
-	}
+    // Setter for availability windows
+    public void setAvailabilityWindows(String availabilityWindows) {
+        this.availabilityWindows = availabilityWindows;
+    }
 
-	public void setStatus(ResourceStatus status) {
-		this.status = status;
-	}
+    // Getter for status
+    public ResourceStatus getStatus() {
+        return status;
+    }
+
+    // Setter for status
+    public void setStatus(ResourceStatus status) {
+        this.status = status;
+    }
 }

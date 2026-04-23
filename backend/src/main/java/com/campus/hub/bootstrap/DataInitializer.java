@@ -79,3 +79,5 @@ public class DataInitializer implements ApplicationRunner {
 		return r;
 	}
 }
+//ppRole Enum and Role Entity/Model
+//Implement Role Assignment in AuthService

@@ -47,6 +47,36 @@
   background: radial-gradient(circle, rgba(37, 99, 235, 0.2), rgba(37, 99, 235, 0));
   pointer-events: none;
 }
+.back-home-link {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.38);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  color: rgba(30, 41, 59, 0.95);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(30, 64, 175, 0.1);
+  transition: transform 0.18s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.back-home-link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(37, 99, 235, 0.35);
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.16);
+  color: var(--primary);
+}
+.back-home-link span {
+  font-size: 15px;
+  line-height: 1;
+}
 .auth-brand {
   position: relative;
   z-index: 1;
@@ -163,6 +193,51 @@
   min-height: 42px;
 }
 
+.auth-divider {
+  display: grid;
+  place-items: center;
+  margin-top: 14px;
+  color: rgba(71, 85, 105, 0.9);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.auth-divider span {
+  position: relative;
+  padding: 0 10px;
+}
+
+.auth-divider span::before,
+.auth-divider span::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 82px;
+  height: 1px;
+  background: rgba(148, 163, 184, 0.55);
+}
+
+.auth-divider span::before {
+  right: 100%;
+}
+
+.auth-divider span::after {
+  left: 100%;
+}
+
+.google-login-wrap {
+  margin-top: 10px;
+  display: grid;
+  place-items: center;
+}
+
+.oauth-note {
+  margin-top: 10px;
+  font-size: 12px;
+  text-align: center;
+}
+
 @media (max-width: 640px) {
   .auth-card {
     padding: 18px;
@@ -172,3 +247,8 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+
+/*Add Google OAuth Button and Flow to Frontend */
+/*Create a Google OAuth login button and integrate the login flow on the frontend.*/
