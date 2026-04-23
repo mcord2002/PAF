@@ -10,3 +10,8 @@ test('renders sign in on login route', () => {
   );
   expect(screen.getByRole('heading', { name: /Sign in/i })).toBeInTheDocument();
 });
+
+
+
+//Test and Document OAuth Integration 
+// //Test the entire OAuth integration and update the documentation.
