@@ -365,6 +365,15 @@ public class TicketService {
 		}
 	}
 
-	
+	private void notifyAdminsOfNewTicket(IncidentTicket ticket) {
+		List<User> admins = userRepository.findByRolesContains(AppRole.ADMIN);
+		for (User admin : admins) {
+			notificationService.notifyUser(
+					admin,
+					NotificationType.TICKET_STATUS,
+					"New ticket created",
+					"Ticket #" + ticket.getId() + " requires review: " + ticket.getCategory(),
+					ticket.getId());
+		}
 	}
 }
