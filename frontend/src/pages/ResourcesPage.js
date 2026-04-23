@@ -178,7 +178,7 @@ export default function ResourcesPage() {
 
                     {/* Capacity filter */}
                     <label className="label">
-                        Min capacity
+                        Min Capacity / Number of Equipments
                         <input
                             className="input"
                             value={filters.minCapacity}
@@ -188,7 +188,7 @@ export default function ResourcesPage() {
 
                     {/* Location filter */}
                     <label className="label">
-                        Location contains
+                        Location
                         <input
                             className="input"
                             value={filters.location}
@@ -225,7 +225,7 @@ export default function ResourcesPage() {
                         <tr>
                             <th>Name</th>
                             <th>Type</th>
-                            <th>Capacity</th>
+                            <th>Capacity or Number of Equipment</th>
                             <th>Location</th>
                             <th>Availability</th>
                             <th>Status</th>
@@ -334,7 +334,7 @@ export default function ResourcesPage() {
 
                             {/* Capacity */}
                             <label className="label">
-                                Capacity
+                                Capacity or Number of Equipment
                                 <input
                                     className="input"
                                     type="number"
