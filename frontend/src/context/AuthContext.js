@@ -87,3 +87,11 @@ export function useAuth() {
   if (!ctx) throw new Error('useAuth must be used within AuthProvider');
   return ctx;
 }
+
+
+//Add Google OAuth Button and Flow to Frontend 
+// //Create a Google OAuth login button and integrate the login flow on the frontend.
+
+
+//Add Google OAuth Button and Flow to Frontend 
+// //Create a Google OAuth login button and integrate the login flow on the frontend.

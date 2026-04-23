@@ -54,3 +54,6 @@ public class AuthController {
 
 //Integrate JWT Token Generation for OAuth Users 
 // After successful OAuth login, generate a JWT token for the user.
+
+//Add Google OAuth Button and Flow to Frontend 
+// //Create a Google OAuth login button and integrate the login flow on the frontend.
